@@ -27,14 +27,26 @@ public class IUserServiceImpl implements IUserService{
 	}
 
 	@Override
-	public void updateUser(User user) {
-		userRepository.save(user);
+	public User updateUser(User user) {
+		return userRepository.saveAndFlush(user);
 		
 	}
 
 	@Override
-	public void deleteUser(User user) {
-		userRepository.delete(user); 
+	public boolean deleteUser(User user) 
+	{
+		if(userRepository.findById(user.getID()) != null) {
+			userRepository.delete(user);
+			return true;
+		}
+		  
+		  return false;
+	}
+
+	@Override
+	public User getOneUser(Integer id) {
+		
+		return userRepository.getOne(id);
 	}
 
 }

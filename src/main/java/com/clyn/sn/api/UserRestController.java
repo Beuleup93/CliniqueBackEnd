@@ -3,8 +3,10 @@ package com.clyn.sn.api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.clyn.sn.entities.User;
@@ -16,25 +18,28 @@ public class UserRestController {
 	@Autowired
 	private IUserService userService;
 	
-	@RequestMapping(method=RequestMethod.GET)
+	@GetMapping("/users")
 	public List<User> allUser(){
 		return userService.findAllUser();
 	}
 	
-	/*
-	 * @RequestMapping(value = "/{ref}",method=RequestMethod.GET) public Classe
-	 * getContactByRef(@PathVariable("ref")String ref){ return
-	 * classeRepository.findOne(ref); }
-	 * 
-	 * @RequestMapping(value = "/save",method=RequestMethod.POST) public Classe
-	 * saveContact(@RequestBody Classe c){ return classeRepository.save(c); }
-	 * 
-	 * @RequestMapping(value = "/update",method=RequestMethod.PUT) public Classe
-	 * updateContact(@RequestBody Classe c){ return
-	 * classeRepository.saveAndFlush(c); }
-	 * 
-	 * @RequestMapping(value = "/delete/{ref}", method = RequestMethod.DELETE)
-	 * public boolean deleteContact(@PathVariable("ref") String id){
-	 * classeRepository.delete(id); return true; }
-	 */
+	@GetMapping("/user")
+	public boolean deleteUser(User user) {
+		return userService.deleteUser(user);
+	}
+	
+	@GetMapping("/user/{id}")
+	public User getUserById(@PathVariable("id")Integer id) {
+		return userService.getOneUser(id);
+	}
+	
+	@PostMapping("/user")
+	public User saveUser(User user) {
+		return userService.saveUser(user);
+	}
+	
+	@PutMapping("/user")
+	public User editUser(User user) {
+		return userService.saveUser(user);
+	}
 }
