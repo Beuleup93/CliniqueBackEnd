@@ -3,6 +3,7 @@ package com.clyn.sn.api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,9 +24,9 @@ public class UserRestController {
 		return userService.findAllUser();
 	}
 	
-	@GetMapping("/user")
-	public boolean deleteUser(User user) {
-		return userService.deleteUser(user);
+	@DeleteMapping("/user/{id}")
+	public boolean deleteUser(@PathVariable("id")Integer id) {
+		return userService.deleteUser(id);
 	}
 	
 	@GetMapping("/user/{id}")
@@ -40,6 +41,6 @@ public class UserRestController {
 	
 	@PutMapping("/user")
 	public User editUser(User user) {
-		return userService.saveUser(user);
+		return userService.updateUser(user);
 	}
 }

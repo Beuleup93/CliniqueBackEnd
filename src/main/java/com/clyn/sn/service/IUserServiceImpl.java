@@ -33,10 +33,10 @@ public class IUserServiceImpl implements IUserService{
 	}
 
 	@Override
-	public boolean deleteUser(User user) 
+	public boolean deleteUser(Integer id) 
 	{
-		if(userRepository.findById(user.getID()) != null) {
-			userRepository.delete(user);
+		if(getOneUser(id) != null) {
+			userRepository.deleteById(id);
 			return true;
 		}
 		  

@@ -20,9 +20,11 @@ public class GCliniqueApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		
-		User u1 =userRepository.save(new User("NDAO", "Saliou", "saliou@gmail.com", "SNDAO", "zale@gmail.com", true));
-		User u2 =userRepository.save(new User("SECK", "Momo", "momo@gmail.com", "MSECK", "momo@gmail.com", true));
+		/*
+		 * User u1 =userRepository.save(new User("NDAO", "Saliou", "saliou@gmail.com",
+		 * "SNDAO", "zale@gmail.com", true)); User u2 =userRepository.save(new
+		 * User("SECK", "Momo", "momo@gmail.com", "MSECK", "momo@gmail.com", true));
+		 */
 	}
 
 }
