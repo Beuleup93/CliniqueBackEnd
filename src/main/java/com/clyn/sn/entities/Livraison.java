@@ -3,11 +3,7 @@ package com.clyn.sn.entities;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -22,17 +18,19 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
-public class Rayon implements Serializable {
+public class Livraison implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Id
+	private String ref;
 	
-	@Column(length = 50, unique = true)
-	private String libelle;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateLivraison;
 	
-	private boolean del;
+	private String typeLivraison;
+	
+	private boolean sup;
 	
 	@JsonIgnore
 	@ManyToOne
@@ -42,10 +40,12 @@ public class Rayon implements Serializable {
 	private Date dateCreate;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateLastUpdate;
+	private Date dateLastUpdate; 
 	
-	@OneToMany(mappedBy = "rayon")
-	private Collection<Produit> produits;
+	@OneToMany(mappedBy = "livraison")
+	private Collection<LigneLivraison> ligneLivraisons;
 	
+	@OneToMany(mappedBy = "livraison")
+	private Collection<Reserve> reserves;
 
 }

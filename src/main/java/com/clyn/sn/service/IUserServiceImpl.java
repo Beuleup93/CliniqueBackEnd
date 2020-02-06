@@ -33,7 +33,7 @@ public class IUserServiceImpl implements IUserService{
 	}
 
 	@Override
-	public boolean deleteUser(Integer id) 
+	public boolean deleteUser(Long id) 
 	{
 		if(getOneUser(id) != null) {
 			userRepository.deleteById(id);
@@ -44,7 +44,7 @@ public class IUserServiceImpl implements IUserService{
 	}
 
 	@Override
-	public User getOneUser(Integer id) {
+	public User getOneUser(Long id) {
 		
 		return userRepository.getOne(id);
 	}

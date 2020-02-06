@@ -25,18 +25,18 @@ import lombok.ToString;
 public class User {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer ID;
+	private Long id;
 	
-	@Column(name = "Nom", length = 50, nullable = false)
+	@Column(name = "Nom", length = 50, nullable = true)
 	private String nom;
 	
-	@Column(name = "Prenom", length = 50, nullable = false)
+	@Column(name = "Prenom", length = 50, nullable = true)
 	private String prenom;
 	
 	@Column(name = "Email", length = 50, nullable = false)
 	private String email;
 	
-	@Column(name = "Alias", length = 5)
+	@Column(name = "Alias", length = 10)
 	private String alias;
 	
 	@Column(name = "Username", length = 50, nullable = false)
@@ -51,16 +51,52 @@ public class User {
 	@Column(name = "Tel",nullable = true)
 	private double telephone;
 	
-	@ManyToOne
-	private User parentUser;
-	
 	@Column(name = "DateNaissance", nullable = true)
 	@Temporal(TemporalType.DATE)
 	private Date dateNaissance;
 	
 	@OneToMany(mappedBy = "user")
 	private Collection<Rayon> rayons;
-
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateCreate;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateLastUpdate;
+	
+	@OneToMany(mappedBy = "user")
+	private Collection<Produit> produits;
+	
+	@OneToMany(mappedBy = "user")
+	private Collection<Address> addresses;
+	
+	@OneToMany(mappedBy = "user")
+	private Collection<Commande> commandes;
+	
+	@OneToMany(mappedBy = "user")
+	private Collection<CommandeFournisseur> commandeFournisseurs;
+	
+	@OneToMany(mappedBy = "user")
+	private Collection<Fournisseur> fournisseurs;
+	
+	@OneToMany(mappedBy = "user")
+	private Collection<LigneCommande> ligneCommandes;
+	
+	@OneToMany(mappedBy = "user")
+	private Collection<LigneLivraison> ligneLivraisons;
+	
+	@OneToMany(mappedBy = "user")
+	private Collection<LigneVente> ligneVentes;
+	
+	@OneToMany(mappedBy = "user")
+	private Collection<Livraison> livraisons;
+	
+	@OneToMany(mappedBy = "user")
+	private Collection<Vente> ventes;
+	
+	@OneToMany(mappedBy = "user")
+	private Collection<Reserve> reserves;
+	
 	public User(String nom, String prenom, String email, String alias, String username, boolean active) {
 		super();
 		this.nom = nom;

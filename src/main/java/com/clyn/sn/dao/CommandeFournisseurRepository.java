@@ -3,9 +3,9 @@ package com.clyn.sn.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import com.clyn.sn.entities.User;
+import com.clyn.sn.entities.CommandeFournisseur;
 
 @RepositoryRestResource
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface CommandeFournisseurRepository extends JpaRepository<CommandeFournisseur, Long> {
 
 }

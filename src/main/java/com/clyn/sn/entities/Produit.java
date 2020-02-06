@@ -22,17 +22,35 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
-public class Rayon implements Serializable {
+public class Produit implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(length = 50, unique = true)
+	private String refProduit;
+	
+	private int quantite;
+	
+	@Column(length = 50)
 	private String libelle;
 	
-	private boolean del;
+	private double prixUnitaire;
+	
+	@Column(nullable = true)
+	private int seuilAlerte;
+	
+	@Column(nullable = true)
+	private int seuilMax;
+	
+	private String codeBarre;
+	
+	private boolean sup;
+	
+	@JsonIgnore
+	@ManyToOne
+	private Rayon rayon;
 	
 	@JsonIgnore
 	@ManyToOne
@@ -44,8 +62,12 @@ public class Rayon implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateLastUpdate;
 	
-	@OneToMany(mappedBy = "rayon")
-	private Collection<Produit> produits;
+	@OneToMany(mappedBy = "produit")
+	private Collection<LigneVente> ligneVentes;
 	
-
+	@OneToMany(mappedBy = "produit")
+	private Collection<LigneCommande> ligneCommandes;
+	
+	@OneToMany(mappedBy = "produit")
+	private Collection<LigneLivraison> ligneLivraisons;
 }

@@ -4,10 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -22,17 +19,16 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
-public class Rayon implements Serializable {
+public class Vente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Id
+	private String ref;
 	
-	@Column(length = 50, unique = true)
-	private String libelle;
+	private Date dateVente;
 	
-	private boolean del;
+	private boolean sup;
 	
 	@JsonIgnore
 	@ManyToOne
@@ -44,8 +40,6 @@ public class Rayon implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateLastUpdate;
 	
-	@OneToMany(mappedBy = "rayon")
-	private Collection<Produit> produits;
-	
-
+	@OneToMany(mappedBy = "vente")
+	private Collection<LigneVente> ligneVentes;
 }

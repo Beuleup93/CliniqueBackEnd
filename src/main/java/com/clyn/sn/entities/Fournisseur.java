@@ -6,13 +6,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -21,18 +20,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor
-public class Rayon implements Serializable {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Fournisseur implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Id
+	private String ref;
 	
-	@Column(length = 50, unique = true)
-	private String libelle;
+	@Column(name="Nom", length = 50, nullable = false)
+	private String nom;
 	
-	private boolean del;
+	@Column(name="Tel", length = 50, nullable = true)
+	private String tel;
+	
+	@Email
+	@Column(name="Email", length = 30)
+	private String email;
+	
+	private boolean sup;
 	
 	@JsonIgnore
 	@ManyToOne
@@ -44,8 +52,10 @@ public class Rayon implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateLastUpdate;
 	
-	@OneToMany(mappedBy = "rayon")
-	private Collection<Produit> produits;
+	@OneToMany(mappedBy = "fournisseur")
+	private Collection<CommandeFournisseur> commandeFournisseurs;
 	
+	@OneToMany(mappedBy = "fournisseur")
+	private Collection<Address> addresses;
 
 }
