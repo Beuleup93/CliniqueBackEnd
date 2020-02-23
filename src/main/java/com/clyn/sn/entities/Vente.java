@@ -6,19 +6,20 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor
+@Data 
+@AllArgsConstructor 
+@NoArgsConstructor
 public class Vente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -29,10 +30,10 @@ public class Vente implements Serializable {
 	private Date dateVente;
 	
 	private boolean sup;
-	
-	@JsonIgnore
-	@ManyToOne
-	private User user;
+
+//	@ManyToOne
+//	@JsonIgnoreProperties(value = "ventes",allowGetters = false)
+//	private Personnel personnel;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreate;
@@ -41,5 +42,6 @@ public class Vente implements Serializable {
 	private Date dateLastUpdate;
 	
 	@OneToMany(mappedBy = "vente")
+	@JsonIgnoreProperties(value = "vente",allowGetters = false)
 	private Collection<LigneVente> ligneVentes;
 }

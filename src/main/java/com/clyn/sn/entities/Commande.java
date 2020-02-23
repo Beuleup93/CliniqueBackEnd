@@ -5,12 +5,11 @@ import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,11 +32,12 @@ public class Commande implements Serializable {
 	private int delaiLivraisonCom;
 	
 	@OneToMany(mappedBy = "commande")
+	@JsonIgnoreProperties(value = "commande",allowGetters = false)
 	private Collection<CommandeFournisseur> commandeFournisseurs;
 	
-	@JsonIgnore
-	@ManyToOne
-	private User user;
+//	@ManyToOne
+//	@JsonIgnoreProperties(value = "commandes",allowGetters = false)
+//	private Personnel personnel;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreate;
@@ -46,6 +46,7 @@ public class Commande implements Serializable {
 	private Date dateLastUpdate; 
 	
 	@OneToMany(mappedBy = "commande")
+	@JsonIgnoreProperties(value = "commande",allowGetters = false)
 	private Collection<LigneCommande> ligneCommandes;
 	
 

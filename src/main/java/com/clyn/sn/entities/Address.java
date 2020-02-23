@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,13 +37,13 @@ public class Address implements Serializable {
 	
 	private boolean sup;
 	
-	@JsonIgnore
 	@ManyToOne
+	@JsonIgnoreProperties(value = "addresses",allowGetters = false)
 	private Fournisseur fournisseur;
 	
-	@JsonIgnore
-	@ManyToOne
-	private User user;
+//	@ManyToOne
+//	@JsonIgnoreProperties(value = "addresses",allowGetters = false)
+//	private Personnel personnel;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreate;

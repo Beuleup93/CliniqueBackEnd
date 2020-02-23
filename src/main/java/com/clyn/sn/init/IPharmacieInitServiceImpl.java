@@ -18,14 +18,14 @@ import com.clyn.sn.dao.LivraisonRepository;
 import com.clyn.sn.dao.ProduitRepository;
 import com.clyn.sn.dao.RayonRepository;
 import com.clyn.sn.dao.ReserveRepository;
-import com.clyn.sn.dao.UserRepository;
+import com.clyn.sn.dao.PersonnelRepository;
 import com.clyn.sn.dao.VenteRepository;
 import com.clyn.sn.entities.Address;
 import com.clyn.sn.entities.Commande;
 import com.clyn.sn.entities.LigneVente;
 import com.clyn.sn.entities.Produit;
 import com.clyn.sn.entities.Rayon;
-import com.clyn.sn.entities.User;
+import com.clyn.sn.entities.Personnel;
 import com.clyn.sn.entities.Vente;
 
 @Service
@@ -33,7 +33,7 @@ import com.clyn.sn.entities.Vente;
 public class IPharmacieInitServiceImpl implements IPharmacieInitService{
 
 	@Autowired
-	private UserRepository userRepository;
+	private PersonnelRepository personnelRepository;
 	
 	@Autowired
 	private RayonRepository rayonRepository;
@@ -73,25 +73,26 @@ public class IPharmacieInitServiceImpl implements IPharmacieInitService{
 	
 	@Override
 	public void initUser() {
-		Stream.of("Saliou","Imame","Zeinab","Abdoulaye").forEach(prenom->{
-			User u = new User();
+		Stream.of("Saliou","Imame").forEach(prenom->{
+			Personnel u = new Personnel();
 			u.setPrenom(prenom);
 			u.setEmail("email@gmail.com");
 			u.setUsername("username");
 			u.setActive(true);
 			u.setAlias("A"+prenom.substring(0, 5));
 			u.setDateCreate(new Date());
-			userRepository.save(u);
+			personnelRepository.save(u);
 		});
 	}
 
 	@Override
 	public void initRayon() {
-		User userCreate = userRepository.findAll().get(0);
-			Stream.of("Rayon1","Rayon2","Rayon3","Rayon4").forEach(libelle->{
+		Personnel userCreate = personnelRepository.findAll().get(0);
+			Stream.of("Rayon1","Rayon2").forEach(libelle->{
 				Rayon r = new Rayon();
 				r.setLibelle(libelle);
-				r.setUser(userCreate);
+				r.setDescription("Rayons contenant les xxx");
+				//r.setPersonnel(userCreate);
 				r.setDateLastUpdate(new Date());
 				r.setDateCreate(new Date());
 				rayonRepository.save(r);
@@ -100,14 +101,14 @@ public class IPharmacieInitServiceImpl implements IPharmacieInitService{
 
 	@Override
 	public void initProduit() {
-		User userCreate = userRepository.findAll().get(0);
+		Personnel userCreate = personnelRepository.findAll().get(0);
 		rayonRepository.findAll().forEach(rayon->{
 			
-			Stream.of("RefProd0","RefProd0","RefProd0","RefProd0").forEach(ref->{
+			Stream.of("RefProd0","RefProd0").forEach(ref->{
 				Produit p = new Produit();
 				p.setRefProduit(ref+(Math.random()*1000));
 				p.setLibelle("Produit");
-				p.setUser(userCreate);
+				//p.setPersonnel(userCreate);
 				p.setDateCreate(new Date());
 				p.setRayon(rayon);
 				p.setDateLastUpdate(new Date());
@@ -118,21 +119,21 @@ public class IPharmacieInitServiceImpl implements IPharmacieInitService{
 
 	@Override
 	public void initVente() {
-		User userCreate = userRepository.findAll().get(0);
-		Stream.of("RefV31","RefV01","RefV52","RefV021").forEach(ref->{
+		Personnel userCreate = personnelRepository.findAll().get(0);
+		Stream.of("RefV31","RefV01").forEach(ref->{
 			Vente v = new Vente();
 			v.setRef(ref+(Math.random()*1000));
 			v.setDateCreate(new Date());
 			v.setDateLastUpdate(new Date());
 			v.setDateVente(new Date());
-			v.setUser(userCreate);
+			//v.setPersonnel(userCreate);
 			venteRepository.save(v);
 		});
 	}
 
 	@Override
 	public void initLigneVente() {
-		User userCreate = userRepository.findAll().get(0);
+		Personnel userCreate = personnelRepository.findAll().get(0);
 		produitRepository.findAll().forEach(p->{
 			venteRepository.findAll().forEach(v->{
 				Stream.of("LV10","LV21","LV02").forEach(ref->{
@@ -141,7 +142,7 @@ public class IPharmacieInitServiceImpl implements IPharmacieInitService{
 					lv.setVente(v);
 					lv.setDateLastUpdate(new Date());
 					lv.setDateCreate(new Date());
-					lv.setUser(userCreate);
+					//lv.setPersonnel(userCreate);
 					ligneVenteRepository.save(lv);
 				});
 			});
@@ -163,15 +164,15 @@ public class IPharmacieInitServiceImpl implements IPharmacieInitService{
 
 	@Override
 	public void initCommande() {
-		User userCreate = userRepository.findAll().get(0);
-		Stream.of("COM0","COM1","COM2").forEach(ref->{
+		Personnel userCreate = personnelRepository.findAll().get(0);
+		Stream.of("COM0","COM1").forEach(ref->{
 			Commande c = new Commande();
 			c.setRef(ref+(Math.random()*1000));
 			c.setDateCommande(new Date());
 			c.setDateCreate(new Date());
 			c.setDateLastUpdate(new Date());
 			c.setDelaiLivraisonCom((int) (10+Math.random()*20));
-			c.setUser(userCreate);
+			//c.setPersonnel(userCreate);
 			commandeRepository.save(c);
 		});
 		
@@ -199,13 +200,13 @@ public class IPharmacieInitServiceImpl implements IPharmacieInitService{
 
 	@Override
 	public void initAddress() {
-	User userCreate = userRepository.findAll().get(0);
-	Stream.of("Xipress","Rufisque","Almadi").forEach(add->{
+	Personnel userCreate = personnelRepository.findAll().get(0);
+	Stream.of("Xipress","Rufisque").forEach(add->{
 		Address a = new Address();
 		a.setPays("Senegal");
 		a.setVille("Dakar");
 		a.setRue(12);
-		a.setUser(userCreate);
+		//a.setPersonnel(userCreate);
 		a.setDateCreate(new Date());
 		a.setDateLastUpdate(new Date());
 		addressRepository.save(a);

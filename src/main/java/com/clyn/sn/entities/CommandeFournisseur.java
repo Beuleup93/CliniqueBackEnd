@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,17 +28,17 @@ public class CommandeFournisseur implements Serializable{
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@JsonIgnore
 	@ManyToOne
+	@JsonIgnoreProperties(value = "commandeFournisseurs",allowGetters = false)
 	private Commande commande;
 	
-	@JsonIgnore
 	@ManyToOne
+	@JsonIgnoreProperties(value = "commandeFournisseurs",allowGetters = false)
 	private Fournisseur fournisseur;
 	
-	@JsonIgnore
-	@ManyToOne
-	private User user;
+//	@ManyToOne
+//	@JsonIgnoreProperties(value = "commandeFournisseurs",allowGetters = false)
+//	private Personnel personnel;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreate;

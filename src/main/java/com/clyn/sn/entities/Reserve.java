@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,9 +29,9 @@ public class Reserve implements Serializable {
 	
 	private boolean sup;
 	
-	@JsonIgnore
-	@ManyToOne
-	private User user;
+//	@ManyToOne
+//	@JsonIgnoreProperties(value = "reserves",allowGetters = false)
+//	private Personnel personnel;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreate;
@@ -40,6 +40,7 @@ public class Reserve implements Serializable {
 	private Date dateLastUpdate; 
 	
 	@ManyToOne
+	@JsonIgnoreProperties(value = "reserves",allowGetters = false)
 	private Livraison livraison;
 
 }

@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -48,13 +48,13 @@ public class Produit implements Serializable {
 	
 	private boolean sup;
 	
-	@JsonIgnore
 	@ManyToOne
+	@JsonIgnoreProperties(value = "Produits",allowGetters = false)
 	private Rayon rayon;
 	
-	@JsonIgnore
-	@ManyToOne
-	private User user;
+//	@ManyToOne
+//	@JsonIgnoreProperties(value = "produits",allowGetters = false)
+//	private Personnel personnel;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreate;
@@ -63,11 +63,14 @@ public class Produit implements Serializable {
 	private Date dateLastUpdate;
 	
 	@OneToMany(mappedBy = "produit")
+	@JsonIgnoreProperties(value = "produit",allowGetters = false)
 	private Collection<LigneVente> ligneVentes;
 	
 	@OneToMany(mappedBy = "produit")
+	@JsonIgnoreProperties(value = "produit",allowGetters = false)
 	private Collection<LigneCommande> ligneCommandes;
 	
 	@OneToMany(mappedBy = "produit")
+	@JsonIgnoreProperties(value = "produit",allowGetters = false)
 	private Collection<LigneLivraison> ligneLivraisons;
 }

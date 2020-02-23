@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,17 +27,17 @@ public class LigneCommande implements Serializable{
 	
 	private int qteCommande;
 	
-	@JsonIgnore
 	@ManyToOne
+	@JsonIgnoreProperties(value = "ligneCommandes",allowGetters = false)
 	private Produit produit;
 	
-	@JsonIgnore
 	@ManyToOne
+	@JsonIgnoreProperties(value = "ligneCommandes",allowGetters = false)
 	private Commande commande;
 	
-	@JsonIgnore
-	@ManyToOne
-	private User user;
+//	@ManyToOne
+//	@JsonIgnoreProperties(value = "ligneCommandes",allowGetters = false)
+//	private Personnel personnel;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreate;
